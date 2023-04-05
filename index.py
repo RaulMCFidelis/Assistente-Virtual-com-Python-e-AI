@@ -1,17 +1,24 @@
 import speech_recognition as sr
+import re
 
-mic = sr.Recognizer()
+while(True):
 
-with sr.Microphone() as source:
-    mic.adjust_for_ambient_noise(source)
+    mic = sr.Recognizer()
 
-    print("Vamos começar, fale alguma coisa...")
+    with sr.Microphone() as source:
+        mic.adjust_for_ambient_noise(source)
 
-    audio = mic.listen(source)
+        print("Vamos começar, fale alguma coisa...")
 
-    try:
-        frase = mic.recognize_google(audio, language='pt-BR')
-        print("Você falou: "+frase)
+        audio = mic.listen(source)
 
-    except sr.UnknownValueError:
-        print("ops, algo deu errado.")    
+        try:
+            frase = mic.recognize_google(audio, language='pt-BR')
+
+            if(re.search(r'\b'+ "ajudar"+r'\b', format(frase))):
+                print("Algo relacionado a ajuda.")
+
+            print("Você falou: "+frase)
+
+        except sr.UnknownValueError:
+            print("ops, algo deu errado.")    
